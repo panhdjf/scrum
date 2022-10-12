@@ -12,20 +12,20 @@ type Task struct {
 	Description string    `gorm:"varchar(1000);nol null" json:"description,omitempty"`
 	Sprint      int       `gorm:"not null" json:"sprint,omitempty"`
 	Assignee    string    `gorm:"not null" json:"assignee,omitempty"`
-	StoryPoint  int       `gorm:"not null" json:"stotyPoint,omitempty"`
+	StoryPoint  int       `gorm:"not null" json:"storyPoint,omitempty"`
 	Status      string    `gorm:"not null" json:"status,omitempty"`
 	CreateAt    time.Time `gorm:"not null" json:"createAt,omitempty"`
 	UpdateAt    time.Time `gorm:"not null" json:"updateAt,omitempty"`
 }
 
 type CreateTaskRequest struct {
-	Name        string    `json:"name" binding:"request"`
-	Description string    `json:"description" binding:"request"`
-	Sprint      int       `json:"sprint" binding:"request"`
-	Assignee    string    `json:"assignee" binding:"request"`
-	StoryPoint  int       `json:"storyPoint" binding:"request"`
-	Status      string    `json:"status" binding:"request"`
-	CreateAt    time.Time `json:"creatAt,omitempty"`
+	Name        string    `json:"name" binding:"required"`
+	Description string    `json:"description" binding:"required"`
+	Sprint      int       `json:"sprint" binding:"required"`
+	Assignee    string    `json:"assignee" binding:"required"`
+	StoryPoint  int       `json:"storyPoint" binding:"required"`
+	Status      string    `json:"status" binding:"required"`
+	CreateAt    time.Time `json:"createAt,omitempty"`
 	UpdateAt    time.Time `json:"updateAt,omitempty"`
 }
 
@@ -36,6 +36,6 @@ type UpdateTask struct {
 	Assignee     string    `json:"assignee,omitempty"`
 	StoryPoint   int       `json:"storyPoint,omitempty"`
 	Status       string    `json:"status,omitempty"`
-	CreateAt     time.Time `json:"creatAt,omitempty"`
+	CreateAt     time.Time `json:"createAt,omitempty"`
 	LastUpdateAt time.Time `json:"updateAt,omitempty"`
 }
