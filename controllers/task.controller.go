@@ -39,7 +39,7 @@ func (tc *TaskController) CreatedTask(ctx *gin.Context) {
 		CreateAt:    now,
 		UpdateAt:    now,
 	}
-	new_task := newTask
+
 	result := tc.DB.Create(&newTask)
 	if result.Error != nil {
 		if strings.Contains(result.Error.Error(), "duplicate key") {
@@ -50,7 +50,7 @@ func (tc *TaskController) CreatedTask(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusOK, gin.H{"status": "success", "data": new_task})
+	ctx.JSON(http.StatusCreated, gin.H{"status": "success", "data": newTask})
 }
 
 func (tc *TaskController) UpdateTask(ctx *gin.Context) {
@@ -126,5 +126,5 @@ func (tc *TaskController) DeleteTask(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusOK, gin.H{"message": "delete success"})
+	ctx.JSON(http.StatusNoContent, nil)
 }
