@@ -8,7 +8,7 @@ import (
 
 type Task struct {
 	Id          uuid.UUID `gorm:"type:uuid;default:uuid_generate_v4();primary_key" json:"id,omitempty"`
-	Name        string    `gorm:"varchar(500);nol null" json:"name,omitempty"`
+	Name        string    `gorm:"uniqueIndex;varchar(500);nol null" json:"name,omitempty"`
 	Description string    `gorm:"varchar(1000);nol null" json:"description,omitempty"`
 	Sprint      int       `gorm:"not null" json:"sprint,omitempty"`
 	Assignee    string    `gorm:"not null" json:"assignee,omitempty"`

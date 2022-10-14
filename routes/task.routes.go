@@ -21,5 +21,9 @@ func (tc *TaskRouteController) TaskRouter(rg *gin.RouterGroup) {
 	router.GET("/", tc.taskController.FindTasks)
 	router.PUT("/:taskId", tc.taskController.UpdateTask)
 	router.GET("/:taskId", tc.taskController.FindTaskById)
+
 	router.DELETE("/:taskId", tc.taskController.DeleteTask)
+
+	router1 := rg.Group("task")
+	router1.GET("/:sprint", tc.taskController.ManagerTask)
 }

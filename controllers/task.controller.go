@@ -128,3 +128,33 @@ func (tc *TaskController) DeleteTask(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, gin.H{"message": "delete success"})
 }
+
+func (tc *TaskController) ManagerTask(ctx *gin.Context) {
+	sprint := ctx.Param("sprint")
+
+	var tasks []models.Task
+	result := tc.DB.Find(&tasks, "sprint = ?", sprint)
+	if result.Error != nil {
+		ctx.JSON(http.StatusNotFound, gin.H{"status": "fail", "message": "No Task with that sprint already exists"})
+		return
+	}
+	//Sprint 54 có 2 task ở trạng thái to do, 0 task in progress, 1 task ready for test, 1 task testing và 10 task done
+	toDo := ManagerStatus("to do", tasks)
+	inProgress := ManagerStatus("in progress", tasks)
+	readyForTest := ManagerStatus("ready for test", tasks)
+	testing := ManagerStatus("testing", tasks)
+	done := ManagerStatus("done", tasks)
+
+	ctx.JSON(http.StatusOK, gin.H{"manager status": gin.H{"to do": toDo, "in progress": inProgress, "read for test": readyForTest, "testing": testing, "done": done}, "sprint": sprint})
+}
+
+func ManagerStatus(status string, tasks []models.Task) int {
+	count := 0
+	for _, task := range tasks {
+		if task.Status == status {
+			count++
+		}
+	}
+	return count
+
+}
